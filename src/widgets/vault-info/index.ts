@@ -1,0 +1,1 @@
+export { VaultInfoWidget } from "./VaultInfoWidget";

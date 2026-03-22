@@ -1,0 +1,20 @@
+{
+  "amountLabel": "Amount ({{symbol}})",
+  "placeholder": "0.00",
+  "maxBtn": "Max",
+  "submitted": "Withdrawal submitted, waiting for wallet approval...",
+  "confirming": "Transaction sent, waiting for confirmation...",
+  "success": "Withdrawal confirmed!",
+  "failed": "Withdrawal failed: {{error}}",
+  "btnSubmitting": "Submitting...",
+  "btnConfirming": "Confirming...",
+  "btnWithdraw": "Withdraw",
+  "yourPosition": "Your position",
+  "sharesLabel": "shares",
+  "validation": {
+    "required": "Amount is required",
+    "invalidFormat": "Enter a valid number",
+    "positive": "Amount must be greater than 0",
+    "exceedsMax": "Exceeds maximum withdrawable amount"
+  }
+}

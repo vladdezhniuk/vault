@@ -1,0 +1,13 @@
+{
+  "title": "Share Price Over Time",
+  "error": "Failed to load chart data.",
+  "empty": "No historical data available.",
+  "tooltipLabel": "Share Price",
+  "timeRange": {
+    "7d": "7D",
+    "30d": "30D",
+    "90d": "90D",
+    "1y": "1Y",
+    "all": "All"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "amountLabel": "Amount ({{symbol}})",
+  "placeholder": "0.00",
+  "maxBtn": "Max",
+  "submitted": "Deposit submitted, waiting for wallet approval...",
+  "confirming": "Transaction sent, waiting for confirmation...",
+  "success": "Deposit confirmed!",
+  "failed": "Deposit failed: {{error}}",
+  "btnSubmitting": "Submitting...",
+  "btnConfirming": "Confirming...",
+  "btnApproveDeposit": "Approve & Deposit",
+  "btnDeposit": "Deposit",
+  "validation": {
+    "required": "Amount is required",
+    "invalidFormat": "Enter a valid number",
+    "positive": "Amount must be greater than 0",
+    "insufficientBalance": "Insufficient balance"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "headerTitle": "Morpho Vault",
+  "cardTitle": "Vault",
+  "defaultName": "Vault",
+  "badgeType": "ERC-4626",
+  "errorOnChain": "Failed to load on-chain data. Please check your RPC connection.",
+  "errorApi": "Failed to load vault data from API. Please try again later.",
+  "stat": {
+    "netApy": "Net APY",
+    "tvl": "TVL (USD)",
+    "liquidity": "Liquidity",
+    "sharePrice": "Share Price",
+    "avgNetApy": "Avg Net APY",
+    "performanceFee": "Performance Fee",
+    "totalAssets": "Total Assets (on-chain)",
+    "totalSupply": "Total Supply (shares)"
+  }
+}
