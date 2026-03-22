@@ -41,7 +41,6 @@ export function VaultInfoWidget() {
     );
   }
 
-  // Derive USD price per human-readable asset unit from the API data
   const usdTvl = (() => {
     if (totalAssets === undefined || assetDecimals === undefined || !vault) return undefined;
     const apiTotalAssetsNum = Number(vault.totalAssets);
