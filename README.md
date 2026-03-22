@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Morpho Vault UI
 
-## Getting Started
+Deposit & withdraw interface for a MetaMorpho (ERC-4626) vault on Ethereum mainnet. Built with Next.js 16, wagmi v3, and viem.
 
-First, run the development server:
+Uses the **Steakhouse USDC** vault ([`0xBEeF...6210`](https://etherscan.io/address/0xBEeFF047C03714965a54b671A37C18beF6b96210)) — a well-known vault with deep liquidity, good for testing.
+
+## Setup
 
 ```bash
+cp .env.example .env.local
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+You need a WalletConnect project ID from [cloud.reown.com](https://cloud.reown.com). RPC defaults to `eth.llamarpc.com` if not set.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## What it does
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Deposit flow batches `approve` + `deposit` into a single `sendCalls` invocation (EIP-5792), so smart wallets execute it atomically and EOAs get a fallback to sequential txs. Withdraw converts the entered asset amount to shares via `convertToShares` and calls `redeem`. Max withdraw uses the raw share balance directly to avoid rounding issues.
 
-## Learn More
+Data comes from two sources: on-chain reads (`totalAssets`, `balanceOf`, `allowance`, etc. via wagmi) and the Morpho GraphQL API (APY, liquidity, historical share price). The share price chart has a time range picker (7D–All).
 
-To learn more about Next.js, take a look at the following resources:
+Toast notifications follow the full tx lifecycle: submitted → confirming → confirmed / failed. Forms use Zod + React Hook Form with real-time validation.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+FSD ([Feature-Sliced Design](https://feature-sliced.design)):
 
-## Deploy on Vercel
+```
+src/
+├── app/          # providers, layout, page shell
+├── entities/     # vault data hooks, user position hooks
+├── features/     # deposit form, withdraw form
+├── widgets/      # vault info card, share price chart, tx widget
+└── shared/       # ABIs, config, i18n, UI components, utils
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Known trade-offs
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- No tests — went for feature completeness over coverage given the time limit
+- `@reown/appkit` pulls in Solana deps transitively, so there are stubs in `next.config.ts` to silence the bundler
+- Chart and vault stats share one API query; switching the time range re-fetches everything (could split, but not worth the complexity)
+- No slippage protection on `redeem` — fine for a demo, wouldn't ship to prod without it
+
+## Deploy
+
+Pushes to `main` deploy to GitHub Pages automatically. Add `NEXT_PUBLIC_WC_PROJECT_ID` and `NEXT_PUBLIC_RPC_URL` to repo secrets.
